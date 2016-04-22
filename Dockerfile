@@ -15,6 +15,9 @@ ENV DOCKER_HOST unix:///var/run/docker.sock
 RUN wget -qO- https://github.com/jwilder/docker-gen/releases/download/0.7.0/docker-gen-linux-amd64-0.7.0.tar.gz | tar xvz -C /usr/local/bin
 COPY etc-hosts.tmpl /etc/etc-hosts.tmpl
 
+#clean yum cache
+RUN yum clean all
+
 COPY *.sh /
 CMD ["/start-server.sh"]
 
