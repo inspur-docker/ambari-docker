@@ -1,11 +1,11 @@
 ambari-server:
-    image: jiadx/ambari-server
+    image: incloud/ambari-server
     ports:
         - "8080:8080"
     command: ["/start-server.sh","setup"]
     hostname: ambari-server
 hadoop-master:
-    image: jiadx/ambari-agent
+    image: incloud/ambari-agent
     links:
         - ambari-server:ambari-server
     volumes:
@@ -15,7 +15,7 @@ hadoop-master:
     environment:
        HADOOP_ROLE: "master"
 hadoop-slave1:
-    image: jiadx/ambari-agent
+    image: incloud/ambari-agent
     links:
         - ambari-server:ambari-server
     command: ["/start-agent.sh","reset","ambari-server"]

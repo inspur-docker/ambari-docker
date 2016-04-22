@@ -8,10 +8,10 @@
 ##  构建镜像
 Ambari Server:
 
-    $ docker build  --rm -t jiadx/ambari-server .
+    $ docker build  --rm -t incloud/ambari-server .
 Ambari agent:
 
-    $ docker build  --rm -t jiadx/ambari-agent -f agent/Dockerfile .
+    $ docker build  --rm -t incloud/ambari-agent -f agent/Dockerfile .
 
 ## 启动多节点 hadoop 容器
 1.使用镜像启动一个多节点的hadoop集群，需要ambari agent节点能识别ambari server主机，本例使用
@@ -23,7 +23,7 @@ Ambari agent:
 
     $ docker run -d -h ambari-server --name ambari-server \
                -p 8080:8080 \
-               jiadx/ambari-server \
+               incloud/ambari-server \
                /start-server.sh setup
 
 ### 启动容器做为hadoop master节点
@@ -33,7 +33,7 @@ Ambari agent:
                 -link ambari-server:ambari-server \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
                 -e "HADOOP_ROLE=master" \
-                jiadx/ambari-agent \
+                incloud/ambari-agent \
                 /start-agent.sh reset ambari-server`
 
 ### 启动容器做为hadoop slave节点
@@ -43,7 +43,7 @@ Ambari agent:
     $ docker run -d -h hadoop-slave1 \
                 -link ambari-server:ambari-server \
                 -l hadoop.role=slave \
-                jiadx/ambari-agent \
+                incloud/ambari-agent \
                 /start-agent.sh reset ambari-server
 ### 创建hadoop集群
 浏览器访问ambari server节点的8080端口，通过UI创建hadoop集群。
@@ -51,7 +51,7 @@ Ambari agent:
 ## 启动all in one 容器
 如需要更多定制化操作-如all-in-one，可以启动shell：
 
-    $ docker run -ti -h ambari-server --name ambari-server  jiadx/ambari-server bash
+    $ docker run -ti -h ambari-server --name ambari-server  incloud/ambari-server bash
 
 
 
@@ -61,13 +61,13 @@ Ambari agent:
 
 
     ambari-server:
-        image: jiadx/ambari-server
+        image: incloud/ambari-server
         ports:
             - "8080:8080"
         command: ["/start-server.sh","setup"]
         hostname: ambari-server
     hadoop-master:
-        image: jiadx/ambari-agent
+        image: incloud/ambari-agent
         links:
             - ambari-server:ambari-server
         volumes:
@@ -77,7 +77,7 @@ Ambari agent:
         environment:
            HADOOP_ROLE: "master"
     hadoop-slave1:
-        image: jiadx/ambari-agent
+        image: incloud/ambari-agent
         links:
             - ambari-server:ambari-server
         command: ["/start-agent.sh","reset","ambari-server"]

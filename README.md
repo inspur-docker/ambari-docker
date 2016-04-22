@@ -7,15 +7,15 @@
 
 Ambari Server:
 
-    $ docker build  --rm -t jiadx/ambari-server .
+    $ docker build  --rm -t incloud/ambari-server .
 Ambari agent:
 
-    $ docker build  --rm -t jiadx/ambari-agent -f agent/Dockerfile .
+    $ docker build  --rm -t incloud/ambari-agent -f agent/Dockerfile .
 
 # Pull Image
 
-    $ docker pull jiadx/ambari-server
-    $ docker pull jiadx/ambari-agent
+    $ docker pull incloud/ambari-server
+    $ docker pull incloud/ambari-agent
 
 # Start
 start with docker-compose:
@@ -23,13 +23,13 @@ start with docker-compose:
 compose file:
 
     ambari-server:
-        image: jiadx/ambari-server
+        image: incloud/ambari-server
         ports:
             - "8080:8080"
         command: ["/start-server.sh","setup"]
         hostname: ambari-server
     hadoop-master:
-        image: jiadx/ambari-agent
+        image: incloud/ambari-agent
         links:
             - ambari-server:ambari-server
         volumes:
@@ -39,7 +39,7 @@ compose file:
         environment:
            HADOOP_ROLE: "master"
     hadoop-slave1:
-        image: jiadx/ambari-agent
+        image: incloud/ambari-agent
         links:
             - ambari-server:ambari-server
         command: ["/start-agent.sh","reset","ambari-server"]
