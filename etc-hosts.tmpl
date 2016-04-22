@@ -1,0 +1,4 @@
+{{ $workers := whereLabelValueMatches $ "hadoop.role" `slave` }}
+{{ range $worker := $workers}}
+{{$worker.IP}} {{$worker.Hostname}}
+{{ end }}

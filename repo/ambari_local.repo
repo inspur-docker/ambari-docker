@@ -1,0 +1,13 @@
+[Updates-ambari-2.2.0.0]
+name=Updates-ambari-2.2.0.0
+baseurl=http://10.110.17.155/insight/Updates-ambari-2.2.0.0/
+gpgcheck=0
+enabled=1
+priority=1
+
+[others]
+name=others
+baseurl=http://10.110.17.154/insight/others/
+gpgcheck=0
+enabled=1
+priority=1
