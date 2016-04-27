@@ -19,7 +19,7 @@ COPY etc-hosts.tmpl /etc/etc-hosts.tmpl
 RUN yum clean all
 
 COPY *.sh /
-RUN chmod +x /*.sh &&
+RUN chmod +x /*.sh
 
 CMD ["/start-server.sh"]
 
