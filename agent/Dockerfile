@@ -16,6 +16,7 @@ RUN wget -qO- https://github.com/jwilder/docker-gen/releases/download/0.7.0/dock
 COPY etc-hosts.tmpl /etc/etc-hosts.tmpl
 
 COPY *.sh /
+RUN chmod +x /*.sh
 CMD ["/start-agent.sh"]
 
 WORKDIR /
