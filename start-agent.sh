@@ -11,7 +11,8 @@ ambari-agent restart &
 #start docker-gen in master node
 HADOOP_ROLE=${HADOOP_ROLE:-slave}
 if [ "$HADOOP_ROLE" = "master" ]; then
-  docker-gen -watch -notify "/add-hosts.sh /etc/hosts.new" /etc/etc-hosts.tmpl /etc/hosts.new &
+  DOCKER_URI=${DOCKER_URI:-unix:///var/run/docker.sock}
+  docker-gen  -endpoint $DOCKER_URI  -watch -notify "/add-hosts.sh /etc/hosts.new" /etc/etc-hosts.tmpl /etc/hosts.new &
 fi
 
 while [ 1 ]
